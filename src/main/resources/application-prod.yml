@@ -1,0 +1,58 @@
+---
+
+spring:
+  config:
+    activate:
+      on-profile:
+        - dev
+
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/loljoa?serverTimezone=Asia/Seoul
+    username: root
+    password: pass
+
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, httptrace, busrefresh, info, prometheus, metrics
+
+jsonPath: "D:\\works\\LoLjoa\\resource"
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile:
+        - prod
+  jpa:
+    database: mysql
+    show-sql: none
+    hibernate:
+      ddl-auto: create
+
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://localhost:3306/loljoa
+    username: root
+    password: pass
