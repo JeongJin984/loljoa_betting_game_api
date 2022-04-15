@@ -21,18 +21,6 @@ public class League {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    @ManyToOne(targetEntity = LeagueCategory.class)
-    private LeagueCategory category;
-
-    @ManyToOne(targetEntity = GameTeam.class)
-    private GameTeam leftTeam;
-
-    @ManyToOne(targetEntity = GameTeam.class)
-    private GameTeam rightTeam;
-
     @OneToMany(mappedBy = "league", fetch = FetchType.LAZY)
     private List<BettingGame> bettingGameData = new ArrayList<>();
-
-    @OneToMany(mappedBy = "league", fetch = FetchType.LAZY)
-    private List<LeagueComment> comments = new ArrayList<>();
 }

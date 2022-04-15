@@ -1,11 +1,14 @@
 package com.loljoa.server.web.service.Impl;
 
+import com.loljoa.server.db.entity.Account;
 import com.loljoa.server.db.entity.BettingChoice;
 import com.loljoa.server.db.entity.BettingGame;
 import com.loljoa.server.db.entity.BettingState;
+import com.loljoa.server.db.repository.account.AccountRepository;
+import com.loljoa.server.db.repository.bettingChoice.BettingChoiceRepository;
 import com.loljoa.server.db.repository.bettingGame.BettingGameRepository;
 import com.loljoa.server.db.repository.bettingState.BettingStateRepository;
-import com.loljoa.server.web.dto.ChoiceDto;
+import com.loljoa.server.web.dto.ChoiceDataDto;
 import com.loljoa.server.web.dto.GameDataDto;
 import com.loljoa.server.web.service.BettingGameService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,8 @@ import java.util.List;
 public class BettingGameServiceImpl implements BettingGameService {
     private final BettingGameRepository bettingGameRepository;
     private final BettingStateRepository bettingStateRepository;
+    private final BettingChoiceRepository bettingChoiceRepository;
+    private final AccountRepository accountRepository;
 
     @Override
     public List<GameDataDto> getBettingGameData(Long leagueId) {
@@ -29,7 +34,7 @@ public class BettingGameServiceImpl implements BettingGameService {
             GameDataDto gameDataDto = new GameDataDto(bg.getGameId());
 
             List<BettingChoice> choices = bg.getChoices();
-            List<ChoiceDto> choiceDtoList = new ArrayList<>();
+            List<ChoiceDataDto> choiceDtoList = new ArrayList<>();
             Long totalPoint = 0L;
             for (BettingChoice bc : choices) {
                 Long totalPointOfChoice = 0L;
@@ -45,14 +50,14 @@ public class BettingGameServiceImpl implements BettingGameService {
                         biggestBetter = bs.getBetter().getNickname();
                     }
                 }
-                choiceDtoList.add(new ChoiceDto(bc.getChoiceId(), bc.getName(), totalPointOfChoice, biggestBetter));
+                choiceDtoList.add(new ChoiceDataDto(bc.getChoiceId(), bc.getName(), totalPointOfChoice, biggestBetter));
             }
             if(totalPoint == 0L) {
-                for(ChoiceDto v : choiceDtoList) {
+                for(ChoiceDataDto v : choiceDtoList) {
                     v.setPercent(0L);
                 }
             } else {
-                for(ChoiceDto v : choiceDtoList) {
+                for(ChoiceDataDto v : choiceDtoList) {
                     double temp =  (v.getTotalPoint().doubleValue() / totalPoint);
                     v.setPercent(Math.round(temp));
                 }
@@ -61,5 +66,11 @@ public class BettingGameServiceImpl implements BettingGameService {
             result.add(gameDataDto);
         }
         return result;
+    }
+    @Override
+    public void bettingToChoice(Long choiceId, Long accountId, Long point) {
+        BettingChoice choice = bettingChoiceRepository.findById(choiceId);
+        Account better = accountRepository.findById(accountId);
+        bettingStateRepository.saveAndFlush(new BettingState(choice, better, point));
     }
 }
