@@ -15,12 +15,12 @@ node {
     }
 
     stage("Image rename") {
-        sh "docker tag account_api:0.0.1-SNAPSHOT loljoa/account_api:0.0.1-SNAPSHOT"
+        sh "docker tag betting_game_api:0.0.1-SNAPSHOT loljoa/betting_game_api:0.0.1-SNAPSHOT"
     }
 
 
     stage("Image push") {
-        sh "docker push loljoa/account_api:0.0.1-SNAPSHOT"
+        sh "docker push loljoa/betting_game_api:0.0.1-SNAPSHOT"
     }
 
     stage("Resource cleanup") {
