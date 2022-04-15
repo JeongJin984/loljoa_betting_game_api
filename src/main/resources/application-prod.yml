@@ -1,10 +1,14 @@
----
-
 spring:
   config:
     activate:
       on-profile:
-        - dev
+        - prod
+  application:
+    name: LoLjoa-Server
+
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
 
   jpa:
     database: mysql
@@ -14,45 +18,35 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/loljoa?serverTimezone=Asia/Seoul
-    username: root
-    password: pass
+    url: ${JDBC_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
-  cache:
-    type: redis
-  redis:
-    host: localhost
-    port: 6379
+#  cache:
+#    type: redis
+#  redis:
+#    host: localhost
+#    port: 6379
 
 management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
   endpoints:
     web:
+      base-path: api/betting/game/actuator
       exposure:
-        include: refresh, health, beans, httptrace, busrefresh, info, prometheus, metrics
+        include: health, beans, prometheus, metrics
 
-jsonPath: "D:\\works\\LoLjoa\\resource"
-
----
-
-spring:
-  config:
-    activate:
-      on-profile:
-        - prod
-  jpa:
-    database: mysql
-    show-sql: none
-    hibernate:
-      ddl-auto: create
-
-  cache:
-    type: redis
-  redis:
-    host: localhost
-    port: 6379
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:postgresql://localhost:3306/loljoa
-    username: root
-    password: pass
+cloud:
+  aws:
+    credentials:
+      accessKey: ${ACCESS_KEY_ID}
+      secretKey: ${SECRET_ACCESS_KEY}
+    s3:
+      bucket: ${S3_BUCKET_NAME}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

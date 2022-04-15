@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/game/data")
+@RequestMapping("/api/betting/game")
 @RequiredArgsConstructor
 public class BettingGameAPI {
     private final BettingGameService bettingGameService;
 
-    @GetMapping("/game/data")
+    @GetMapping("/data")
     public List<GameDataDto> getBettingGameData(
             @RequestParam Long leagueId
     ) {
