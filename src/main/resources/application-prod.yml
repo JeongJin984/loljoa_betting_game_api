@@ -35,7 +35,7 @@ management:
         enabled: true
   endpoints:
     web:
-      base-path: api/betting/game/actuator
+      base-path: /api/betting/game/actuator
       exposure:
         include: health, beans, prometheus, metrics
 
