@@ -50,6 +50,7 @@ public class BettingGameServiceImpl implements BettingGameService {
                         biggestBetter = bs.getBetter().getNickname();
                     }
                 }
+
                 choiceDtoList.add(new ChoiceDataDto(bc.getChoiceId(), bc.getName(), totalPointOfChoice, biggestBetter));
             }
             if(totalPoint == 0L) {
