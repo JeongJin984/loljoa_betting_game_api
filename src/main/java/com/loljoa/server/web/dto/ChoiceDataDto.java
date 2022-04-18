@@ -8,12 +8,14 @@ public class ChoiceDataDto {
     private String name;
     private Long totalPoint;
     private String biggestBetter;
+    private Long biggestPoint;
     private Long percent;
 
-    public ChoiceDataDto(Long choiceId, String name, Long totalPoint, String biggestBetter) {
+    public ChoiceDataDto(Long choiceId, String name, Long totalPoint, String biggestBetter, Long biggestPoint) {
         this.choiceId = choiceId;
         this.name = name;
         this.totalPoint = totalPoint;
         this.biggestBetter = biggestBetter;
+        this.biggestPoint = biggestPoint;
     }
 }

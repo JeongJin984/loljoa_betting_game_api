@@ -47,11 +47,11 @@ public class BettingGameServiceImpl implements BettingGameService {
                     totalPointOfChoice += curPoint;
                     if(maxPoint < curPoint) {
                         maxPoint = curPoint;
-                        biggestBetter = bs.getBetter().getNickname();
+                        biggestBetter = bs.getBetter().getUsername();
                     }
                 }
 
-                choiceDtoList.add(new ChoiceDataDto(bc.getChoiceId(), bc.getName(), totalPointOfChoice, biggestBetter));
+                choiceDtoList.add(new ChoiceDataDto(bc.getChoiceId(), bc.getName(), totalPointOfChoice, biggestBetter, maxPoint));
             }
             if(totalPoint == 0L) {
                 for(ChoiceDataDto v : choiceDtoList) {
@@ -59,7 +59,7 @@ public class BettingGameServiceImpl implements BettingGameService {
                 }
             } else {
                 for(ChoiceDataDto v : choiceDtoList) {
-                    double temp =  (v.getTotalPoint().doubleValue() / totalPoint);
+                    double temp =  (v.getTotalPoint().doubleValue() / totalPoint) * 100;
                     v.setPercent(Math.round(temp));
                 }
             }

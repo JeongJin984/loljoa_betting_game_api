@@ -18,22 +18,18 @@ public class Account {
     Long accountId;
 
     @Column(unique = true)
-    String userId;
-
-    @Column(unique = true)
-    String nickname;
+    String username;
     String password;
 
-    @OneToMany(mappedBy = "better")
-    List<BettingState> bettingStates = new ArrayList<>();
+    Long point;
 
     public Account(Long accountId) {
         this.accountId = accountId;
     }
 
-    public Account(String userId, String nickname, String password) {
-        this.userId = userId;
-        this.nickname = nickname;
+    public Account(String username, String password, Long point) {
+        this.username = username;
         this.password = password;
+        this.point = point;
     }
 }
