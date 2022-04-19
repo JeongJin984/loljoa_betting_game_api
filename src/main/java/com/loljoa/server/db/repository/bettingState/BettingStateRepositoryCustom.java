@@ -8,5 +8,5 @@ public interface BettingStateRepositoryCustom {
 
     List<BettingState> getAllBettingState(Long bettingChoiceId);
 
-    List<BettingState> getAccountBettingState(Long accountId);
+    List<BettingState> getAccountBettingState(String username);
 }

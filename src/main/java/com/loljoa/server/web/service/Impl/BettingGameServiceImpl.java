@@ -77,10 +77,10 @@ public class BettingGameServiceImpl implements BettingGameService {
     }
 
     @Override
-    public AccountDto getAccountBettingData(Long accountId) {
+    public AccountDto getAccountBettingData(String username) {
         AccountDto accountDto = new AccountDto();
 
-        List<BettingState> accountBettingState = bettingStateRepository.getAccountBettingState(accountId);
+        List<BettingState> accountBettingState = bettingStateRepository.getAccountBettingState(username);
         accountDto.setUsername(accountBettingState.get(0).getBetter().getUsername());
         for(BettingState v : accountBettingState) {
             accountDto.getBettingData().add(

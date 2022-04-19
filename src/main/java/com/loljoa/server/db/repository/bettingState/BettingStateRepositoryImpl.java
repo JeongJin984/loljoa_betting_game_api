@@ -28,13 +28,13 @@ public class BettingStateRepositoryImpl implements BettingStateRepositoryCustom 
     }
 
     @Override
-    public List<BettingState> getAccountBettingState(Long accountId) {
+    public List<BettingState> getAccountBettingState(String username) {
         return factory
                 .selectFrom(bettingState)
                 .join(bettingState.choice(), bettingChoice).fetchJoin()
                 .join(bettingState.better(), account).fetchJoin()
                 .join(bettingState.league(), league).fetchJoin()
-                .where(bettingState.better().accountId.eq(accountId))
+                .where(bettingState.better().username.eq(username))
                 .fetch();
     }
 }
