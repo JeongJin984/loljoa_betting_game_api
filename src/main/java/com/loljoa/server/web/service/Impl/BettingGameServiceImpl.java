@@ -5,6 +5,7 @@ import com.loljoa.server.db.repository.account.AccountRepository;
 import com.loljoa.server.db.repository.bettingChoice.BettingChoiceRepository;
 import com.loljoa.server.db.repository.bettingGame.BettingGameRepository;
 import com.loljoa.server.db.repository.bettingState.BettingStateRepository;
+import com.loljoa.server.db.repository.league.LeagueRepository;
 import com.loljoa.server.web.dto.AccountDto;
 import com.loljoa.server.web.dto.ChoiceDataDto;
 import com.loljoa.server.web.dto.GameDataDto;
@@ -22,6 +23,7 @@ public class BettingGameServiceImpl implements BettingGameService {
     private final BettingStateRepository bettingStateRepository;
     private final BettingChoiceRepository bettingChoiceRepository;
     private final AccountRepository accountRepository;
+    private final LeagueRepository leagueRepository;
 
     @Override
     public List<GameDataDto> getBettingGameData(Long leagueId) {
@@ -67,10 +69,11 @@ public class BettingGameServiceImpl implements BettingGameService {
         return result;
     }
     @Override
-    public void bettingToChoice(Long choiceId, Long accountId, Long point) {
+    public void bettingToChoice(Long choiceId, Long accountId, Long leagueId, Long point) {
         BettingChoice choice = bettingChoiceRepository.findById(choiceId);
         Account better = accountRepository.findById(accountId);
-        bettingStateRepository.saveAndFlush(new BettingState(choice, better, point));
+        League league = leagueRepository.findById(leagueId);
+        bettingStateRepository.saveAndFlush(new BettingState(choice, better, league,point));
     }
 
     @Override
@@ -78,17 +81,15 @@ public class BettingGameServiceImpl implements BettingGameService {
         AccountDto accountDto = new AccountDto();
 
         List<BettingState> accountBettingState = bettingStateRepository.getAccountBettingState(accountId);
+        accountDto.setUsername(accountBettingState.get(0).getBetter().getUsername());
         for(BettingState v : accountBettingState) {
-            BettingChoice bettingChoice = bettingChoiceRepository.getChoiceById(v.getChoice().getChoiceId());
-            BettingGame gameDataById = bettingGameRepository.getGameDataById(bettingChoice.getTargetGame().getGameId());
-            League league = gameDataById.getLeague();
             accountDto.getBettingData().add(
                     new AccountDto.BettingData(
-                            league.getLeagueName().split("vs")[0],
-                            league.getLeagueName().split("vs")[1],
-                            league.getWeekNum(),
-                            league.getStartTime(),
-                            bettingChoice.getName(),
+                            v.getLeague().getLeagueName().split("vs")[0],
+                            v.getLeague().getLeagueName().split("vs")[1],
+                            v.getLeague().getWeekNum(),
+                            v.getLeague().getStartTime(),
+                            v.getChoice().getName(),
                             v.getPoint()
                     )
             );

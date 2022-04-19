@@ -21,9 +21,13 @@ public class BettingState {
     @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY)
     private Account better;
 
-    public BettingState(BettingChoice choice, Account better, Long point) {
+    @ManyToOne(targetEntity = League.class)
+    private League league;
+
+    public BettingState(BettingChoice choice, Account better, League league, Long point) {
         this.choice = choice;
         this.better = better;
         this.point = point;
+        this.league = league;
     }
 }

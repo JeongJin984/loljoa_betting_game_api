@@ -10,6 +10,7 @@ import java.util.List;
 import static com.loljoa.server.db.entity.QAccount.account;
 import static com.loljoa.server.db.entity.QBettingChoice.bettingChoice;
 import static com.loljoa.server.db.entity.QBettingState.bettingState;
+import static com.loljoa.server.db.entity.QLeague.league;
 
 @Repository
 @RequiredArgsConstructor
@@ -32,6 +33,7 @@ public class BettingStateRepositoryImpl implements BettingStateRepositoryCustom 
                 .selectFrom(bettingState)
                 .join(bettingState.choice(), bettingChoice).fetchJoin()
                 .join(bettingState.better(), account).fetchJoin()
+                .join(bettingState.league(), league).fetchJoin()
                 .where(bettingState.better().accountId.eq(accountId))
                 .fetch();
     }

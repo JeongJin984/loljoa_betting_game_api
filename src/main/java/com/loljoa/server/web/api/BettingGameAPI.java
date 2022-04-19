@@ -1,5 +1,6 @@
 package com.loljoa.server.web.api;
 
+import com.loljoa.server.web.dto.AccountDto;
 import com.loljoa.server.web.dto.GameDataDto;
 import com.loljoa.server.web.service.BettingGameService;
 import lombok.RequiredArgsConstructor;
@@ -28,16 +29,16 @@ public class BettingGameAPI {
     public void bettingState(
             @RequestParam Long accountId,
             @RequestParam Long choiceId,
+            @RequestParam Long leagueId,
             @RequestParam Long point
     ) {
-        bettingGameService.bettingToChoice(choiceId, accountId, point);
+        bettingGameService.bettingToChoice(choiceId, accountId, leagueId, point);
     }
 
     @GetMapping("/user")
-    public void bettingState(
+    public AccountDto bettingState(
             @RequestParam Long accountId
     ) {
-        bettingGameService.getAccountBettingData(accountId);
+        return bettingGameService.getAccountBettingData(accountId);
     }
-
 }
