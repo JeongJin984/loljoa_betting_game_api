@@ -8,5 +8,5 @@ import java.util.List;
 public interface BettingGameService {
     List<GameDataDto> getBettingGameData(Long leagueId);
     void bettingToChoice(Long choiceId, Long accountId, Long leagueId, Long point);
-    AccountDto getAccountBettingData(Long accountId);
+    AccountDto getAccountBettingData(String username);
 }

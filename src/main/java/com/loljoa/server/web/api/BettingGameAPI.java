@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -37,8 +40,9 @@ public class BettingGameAPI {
 
     @GetMapping("/user")
     public AccountDto bettingState(
-            @RequestParam Long accountId
+            HttpServletRequest request
     ) {
-        return bettingGameService.getAccountBettingData(accountId);
+        Cookie[] cookies = request.getCookies();
+        return bettingGameService.getAccountBettingData(request.getCookies()[0].getValue());
     }
 }
