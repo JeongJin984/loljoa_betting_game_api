@@ -29,13 +29,13 @@ public class BettingGameAPI {
     }
 
     @GetMapping("/betting")
-    public void bettingState(
+    public AccountDto.BettingData bettingState(
             @RequestParam Long accountId,
             @RequestParam Long choiceId,
             @RequestParam Long leagueId,
             @RequestParam Long point
     ) {
-        bettingGameService.bettingToChoice(choiceId, accountId, leagueId, point);
+        return bettingGameService.bettingToChoice(choiceId, accountId, leagueId, point);
     }
 
     @GetMapping("/user")

@@ -69,11 +69,19 @@ public class BettingGameServiceImpl implements BettingGameService {
         return result;
     }
     @Override
-    public void bettingToChoice(Long choiceId, Long accountId, Long leagueId, Long point) {
+    public AccountDto.BettingData bettingToChoice(Long choiceId, Long accountId, Long leagueId, Long point) {
         BettingChoice choice = bettingChoiceRepository.findById(choiceId);
         Account better = accountRepository.findById(accountId);
         League league = leagueRepository.findById(leagueId);
         bettingStateRepository.saveAndFlush(new BettingState(choice, better, league,point));
+        return new AccountDto.BettingData(
+                league.getLeagueName().split("vs")[0],
+                league.getLeagueName().split("vs")[1],
+                league.getWeekNum(),
+                league.getStartTime(),
+                choice.getName(),
+                point
+        );
     }
 
     @Override
