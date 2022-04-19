@@ -4,6 +4,8 @@ import com.loljoa.server.web.dto.AccountDto;
 import com.loljoa.server.web.dto.GameDataDto;
 import com.loljoa.server.web.service.BettingGameService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.Nullable;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,9 +42,14 @@ public class BettingGameAPI {
 
     @GetMapping("/user")
     public AccountDto bettingState(
+            @Nullable @RequestParam String username,
             HttpServletRequest request
     ) {
-        Cookie[] cookies = request.getCookies();
-        return bettingGameService.getAccountBettingData(request.getCookies()[0].getValue());
+        if(StringUtils.hasText(username)) {
+            return bettingGameService.getAccountBettingData(username);
+        } else {
+            Cookie[] cookies = request.getCookies();
+            return bettingGameService.getAccountBettingData(request.getCookies()[0].getValue());
+        }
     }
 }

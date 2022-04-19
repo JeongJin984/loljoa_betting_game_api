@@ -89,6 +89,7 @@ public class BettingGameServiceImpl implements BettingGameService {
         AccountDto accountDto = new AccountDto();
 
         List<BettingState> accountBettingState = bettingStateRepository.getAccountBettingState(username);
+        accountDto.setAccountId(accountBettingState.get(0).getBetter().getAccountId());
         accountDto.setUsername(accountBettingState.get(0).getBetter().getUsername());
         for(BettingState v : accountBettingState) {
             accountDto.getBettingData().add(

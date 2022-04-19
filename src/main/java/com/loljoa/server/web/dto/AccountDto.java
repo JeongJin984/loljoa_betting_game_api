@@ -1,15 +1,23 @@
 package com.loljoa.server.web.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class AccountDto {
+    private Long accountId;
     private String username;
     List<BettingData> bettingData = new ArrayList<>();
+
+    public AccountDto(Long accountId, String username) {
+        this.accountId = accountId;
+        this.username = username;
+    }
 
     @Data
     public static class BettingData {
