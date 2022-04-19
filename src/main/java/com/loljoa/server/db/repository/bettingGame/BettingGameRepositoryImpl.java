@@ -28,4 +28,14 @@ public class BettingGameRepositoryImpl implements BettingGameRepositoryCustom {
 
         return fetch;
     }
+
+    @Override
+    public BettingGame getGameDataById(Long bettingGameId) {
+        return factory
+                .selectFrom(bettingGame)
+                .join(bettingGame.league(), league).fetchJoin()
+                .distinct()
+                .where(bettingGame.gameId.eq(bettingGameId))
+                .fetchOne();
+    }
 }

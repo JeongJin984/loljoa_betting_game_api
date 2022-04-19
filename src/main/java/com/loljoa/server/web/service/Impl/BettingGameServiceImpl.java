@@ -1,13 +1,11 @@
 package com.loljoa.server.web.service.Impl;
 
-import com.loljoa.server.db.entity.Account;
-import com.loljoa.server.db.entity.BettingChoice;
-import com.loljoa.server.db.entity.BettingGame;
-import com.loljoa.server.db.entity.BettingState;
+import com.loljoa.server.db.entity.*;
 import com.loljoa.server.db.repository.account.AccountRepository;
 import com.loljoa.server.db.repository.bettingChoice.BettingChoiceRepository;
 import com.loljoa.server.db.repository.bettingGame.BettingGameRepository;
 import com.loljoa.server.db.repository.bettingState.BettingStateRepository;
+import com.loljoa.server.web.dto.AccountDto;
 import com.loljoa.server.web.dto.ChoiceDataDto;
 import com.loljoa.server.web.dto.GameDataDto;
 import com.loljoa.server.web.service.BettingGameService;
@@ -73,5 +71,28 @@ public class BettingGameServiceImpl implements BettingGameService {
         BettingChoice choice = bettingChoiceRepository.findById(choiceId);
         Account better = accountRepository.findById(accountId);
         bettingStateRepository.saveAndFlush(new BettingState(choice, better, point));
+    }
+
+    @Override
+    public AccountDto getAccountBettingData(Long accountId) {
+        AccountDto accountDto = new AccountDto();
+
+        List<BettingState> accountBettingState = bettingStateRepository.getAccountBettingState(accountId);
+        for(BettingState v : accountBettingState) {
+            BettingChoice bettingChoice = bettingChoiceRepository.getChoiceById(v.getChoice().getChoiceId());
+            BettingGame gameDataById = bettingGameRepository.getGameDataById(bettingChoice.getTargetGame().getGameId());
+            League league = gameDataById.getLeague();
+            accountDto.getBettingData().add(
+                    new AccountDto.BettingData(
+                            league.getLeagueName().split("vs")[0],
+                            league.getLeagueName().split("vs")[1],
+                            league.getWeekNum(),
+                            league.getStartTime(),
+                            bettingChoice.getName(),
+                            v.getPoint()
+                    )
+            );
+        }
+        return accountDto;
     }
 }

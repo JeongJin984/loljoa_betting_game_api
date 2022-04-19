@@ -7,4 +7,6 @@ import java.util.List;
 public interface BettingStateRepositoryCustom {
 
     List<BettingState> getAllBettingState(Long bettingChoiceId);
+
+    List<BettingState> getAccountBettingState(Long accountId);
 }

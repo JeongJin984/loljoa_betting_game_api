@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface BettingGameRepositoryCustom {
     List<BettingGame> getGameData(Long leagueId);
+
+    BettingGame getGameDataById(Long bettingGameId);
 }
