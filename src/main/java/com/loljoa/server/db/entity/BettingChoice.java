@@ -20,7 +20,7 @@ public class BettingChoice {
     private Long biggestPoint;
     private String biggestBetter;
 
-    @ManyToOne(targetEntity = BettingGame.class)
+    @ManyToOne(targetEntity = BettingGame.class, fetch = FetchType.LAZY)
     private BettingGame targetGame;
 
     public BettingChoice(String name, BettingGame targetGame) {
@@ -32,7 +32,7 @@ public class BettingChoice {
     private List<BettingState> bettingStates = new ArrayList<>();
 
     public void addTotalPoint(String better, Long point) {
-        this.totalPoint += totalPoint;
+        this.totalPoint += point;
         if(point > biggestPoint) {
             this.biggestBetter = better;
             this.biggestPoint = point;

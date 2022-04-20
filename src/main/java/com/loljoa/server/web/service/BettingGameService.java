@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface BettingGameService {
     List<GameDataDto> getBettingGameData(Long leagueId);
-    AccountDto.BettingData bettingToChoice(Long choiceId, Long accountId, Long leagueId, Long point);
+    AccountDto.BettingData bettingToChoice(Long choiceId, Long accountId, Long leagueId, Long gameId, Long point);
     AccountDto getAccountBettingData(String username);
 }

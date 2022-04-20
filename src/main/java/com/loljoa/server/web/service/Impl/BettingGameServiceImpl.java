@@ -64,15 +64,18 @@ public class BettingGameServiceImpl implements BettingGameService {
         }
         return result;
     }
+
     @Override
     @Transactional
-    public AccountDto.BettingData bettingToChoice(Long choiceId, Long accountId, Long leagueId, Long point) {
+    public AccountDto.BettingData bettingToChoice(Long choiceId, Long accountId, Long leagueId, Long gameId, Long point) {
         BettingChoice choice = bettingChoiceRepository.getChoiceById(choiceId);
         Account better = accountRepository.getAccountById(accountId);
         League league = leagueRepository.getLeagueById(leagueId);
+        BettingGame bettingGame = bettingGameRepository.getGameDataById(gameId);
         bettingStateRepository.save(new BettingState(choice, better, league,point));
         choice.addTotalPoint(better.getUsername(), point);
         better.usePoint(point);
+        bettingGame.addTotalPoint(point);
         return new AccountDto.BettingData(
                 league.getLeagueName().split("vs")[0],
                 league.getLeagueName().split("vs")[1],
@@ -81,6 +84,7 @@ public class BettingGameServiceImpl implements BettingGameService {
                 choice.getChoiceId(),
                 choice.getName(),
                 choice.getTotalPoint(),
+                bettingGame.getTotalPoint(),
                 point
         );
     }
@@ -94,6 +98,7 @@ public class BettingGameServiceImpl implements BettingGameService {
             AccountDto accountDto = new AccountDto(better.getAccountId(), better.getUsername(), better.getPoint());
 
             for(BettingState v : accountBettingState) {
+                BettingGame game = v.getChoice().getTargetGame();
                 accountDto.getBettingData().add(
                         new AccountDto.BettingData(
                                 v.getLeague().getLeagueName().split("vs")[0],
@@ -103,6 +108,7 @@ public class BettingGameServiceImpl implements BettingGameService {
                                 v.getChoice().getChoiceId(),
                                 v.getChoice().getName(),
                                 v.getChoice().getTotalPoint(),
+                                game.getTotalPoint(),
                                 v.getPoint()
                         )
                 );

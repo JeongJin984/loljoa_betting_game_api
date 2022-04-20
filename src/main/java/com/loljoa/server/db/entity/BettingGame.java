@@ -16,8 +16,9 @@ public class BettingGame {
     private Long gameId;
 
     private String title;
+    private Long totalPoint;
 
-    @ManyToOne(targetEntity = League.class)
+    @ManyToOne(targetEntity = League.class, fetch = FetchType.LAZY)
     private League league;
 
     public BettingGame(String title, League league) {
@@ -25,6 +26,10 @@ public class BettingGame {
         this.league = league;
     }
 
-    @OneToMany(mappedBy = "targetGame")
+    @OneToMany(mappedBy = "targetGame", fetch = FetchType.LAZY)
     private final List<BettingChoice> choices = new ArrayList<>();
+
+    public void addTotalPoint(Long point) {
+        totalPoint += point;
+    }
 }

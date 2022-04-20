@@ -31,6 +31,7 @@ public class AccountDto {
         private Long choiceId;
         private String choice;
         private Long choiceTotalPoint;
+        private String odd;
         private Long point;
 
         public BettingData(
@@ -41,6 +42,7 @@ public class AccountDto {
                 Long choiceId,
                 String choice,
                 Long choiceTotalPoint,
+                Long totalGamePoint,
                 Long point
         ) {
             this.leftTeam = leftTeam;
@@ -50,6 +52,7 @@ public class AccountDto {
             this.choiceId = choiceId;
             this.choice = choice;
             this.choiceTotalPoint = choiceTotalPoint;
+            this.odd = String.format("%.2f", (choiceTotalPoint.doubleValue() / totalGamePoint) * 100);
             this.point = point;
         }
     }
