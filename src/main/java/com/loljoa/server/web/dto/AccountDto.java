@@ -26,14 +26,16 @@ public class AccountDto {
         private String weekNum;
         private LocalDateTime startTime;
 
+        private Long choiceId;
         private String choice;
         private Long point;
 
-        public BettingData(String leftTeam, String rightTeam, String weekNum, LocalDateTime startTime, String choice, Long point) {
+        public BettingData(String leftTeam, String rightTeam, String weekNum, LocalDateTime startTime, Long choiceId, String choice, Long point) {
             this.leftTeam = leftTeam;
             this.rightTeam = rightTeam;
             this.weekNum = weekNum;
             this.startTime = startTime;
+            this.choiceId = choiceId;
             this.choice = choice;
             this.point = point;
         }

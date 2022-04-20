@@ -79,6 +79,7 @@ public class BettingGameServiceImpl implements BettingGameService {
                 league.getLeagueName().split("vs")[1],
                 league.getWeekNum(),
                 league.getStartTime(),
+                choice.getChoiceId(),
                 choice.getName(),
                 point
         );
@@ -98,6 +99,7 @@ public class BettingGameServiceImpl implements BettingGameService {
                             v.getLeague().getLeagueName().split("vs")[1],
                             v.getLeague().getWeekNum(),
                             v.getLeague().getStartTime(),
+                            v.getChoice().getChoiceId(),
                             v.getChoice().getName(),
                             v.getPoint()
                     )
