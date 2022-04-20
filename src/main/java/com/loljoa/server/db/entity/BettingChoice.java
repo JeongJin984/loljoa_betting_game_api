@@ -16,6 +16,9 @@ public class BettingChoice {
     private Long choiceId;
 
     private String name;
+    private Long totalPoint;
+    private Long biggestPoint;
+    private String biggestBetter;
 
     @ManyToOne(targetEntity = BettingGame.class)
     private BettingGame targetGame;
@@ -27,4 +30,12 @@ public class BettingChoice {
 
     @OneToMany(mappedBy = "choice", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<BettingState> bettingStates = new ArrayList<>();
+
+    public void addTotalPoint(String better, Long point) {
+        this.totalPoint += totalPoint;
+        if(point > biggestPoint) {
+            this.biggestBetter = better;
+            this.biggestPoint = point;
+        }
+    }
 }

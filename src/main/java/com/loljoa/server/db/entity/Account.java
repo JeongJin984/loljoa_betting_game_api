@@ -32,4 +32,8 @@ public class Account {
         this.password = password;
         this.point = point;
     }
+
+    public void usePoint(Long point) {
+        this.point -= point;
+    }
 }

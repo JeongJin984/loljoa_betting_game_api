@@ -12,11 +12,13 @@ import java.util.List;
 public class AccountDto {
     private Long accountId;
     private String username;
+    private Long point;
     List<BettingData> bettingData = new ArrayList<>();
 
-    public AccountDto(Long accountId, String username) {
+    public AccountDto(Long accountId, String username, Long point) {
         this.accountId = accountId;
         this.username = username;
+        this.point = point;
     }
 
     @Data
@@ -28,15 +30,26 @@ public class AccountDto {
 
         private Long choiceId;
         private String choice;
+        private Long choiceTotalPoint;
         private Long point;
 
-        public BettingData(String leftTeam, String rightTeam, String weekNum, LocalDateTime startTime, Long choiceId, String choice, Long point) {
+        public BettingData(
+                String leftTeam,
+                String rightTeam,
+                String weekNum,
+                LocalDateTime startTime,
+                Long choiceId,
+                String choice,
+                Long choiceTotalPoint,
+                Long point
+        ) {
             this.leftTeam = leftTeam;
             this.rightTeam = rightTeam;
             this.weekNum = weekNum;
             this.startTime = startTime;
             this.choiceId = choiceId;
             this.choice = choice;
+            this.choiceTotalPoint = choiceTotalPoint;
             this.point = point;
         }
     }

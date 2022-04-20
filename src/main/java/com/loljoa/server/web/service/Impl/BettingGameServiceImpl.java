@@ -37,21 +37,16 @@ public class BettingGameServiceImpl implements BettingGameService {
             List<ChoiceDataDto> choiceDtoList = new ArrayList<>();
             Long totalPoint = 0L;
             for (BettingChoice bc : choices) {
-                Long totalPointOfChoice = 0L;
-                String biggestBetter = "";
-                long maxPoint = 0L;
-                List<BettingState> bettingState = bettingStateRepository.getAllBettingState(bc.getChoiceId());
-                for(BettingState bs : bettingState) {
-                    Long curPoint = bs.getPoint();
-                    totalPoint += curPoint;
-                    totalPointOfChoice += curPoint;
-                    if(maxPoint < curPoint) {
-                        maxPoint = curPoint;
-                        biggestBetter = bs.getBetter().getUsername();
-                    }
-                }
-
-                choiceDtoList.add(new ChoiceDataDto(bc.getChoiceId(), bc.getName(), totalPointOfChoice, biggestBetter, maxPoint));
+                totalPoint += bc.getTotalPoint();
+                choiceDtoList.add(
+                        new ChoiceDataDto(
+                                bc.getChoiceId(),
+                                bc.getName(),
+                                bc.getTotalPoint(),
+                                bc.getBiggestBetter(),
+                                bc.getBiggestPoint()
+                        )
+                );
             }
             if(totalPoint == 0L) {
                 for(ChoiceDataDto v : choiceDtoList) {
@@ -73,7 +68,9 @@ public class BettingGameServiceImpl implements BettingGameService {
         BettingChoice choice = bettingChoiceRepository.getChoiceById(choiceId);
         Account better = accountRepository.getAccountById(accountId);
         League league = leagueRepository.getLeagueById(leagueId);
-        BettingState state = bettingStateRepository.save(new BettingState(choice, better, league,point));
+        bettingStateRepository.save(new BettingState(choice, better, league,point));
+        choice.addTotalPoint(better.getUsername(), point);
+        better.usePoint(point);
         return new AccountDto.BettingData(
                 league.getLeagueName().split("vs")[0],
                 league.getLeagueName().split("vs")[1],
@@ -81,17 +78,19 @@ public class BettingGameServiceImpl implements BettingGameService {
                 league.getStartTime(),
                 choice.getChoiceId(),
                 choice.getName(),
+                choice.getTotalPoint(),
                 point
         );
     }
 
     @Override
     public AccountDto getAccountBettingData(String username) {
-        AccountDto accountDto = new AccountDto();
 
         List<BettingState> accountBettingState = bettingStateRepository.getAccountBettingState(username);
-        accountDto.setAccountId(accountBettingState.get(0).getBetter().getAccountId());
-        accountDto.setUsername(accountBettingState.get(0).getBetter().getUsername());
+
+        Account better = accountBettingState.get(0).getBetter();
+        AccountDto accountDto = new AccountDto(better.getAccountId(), better.getUsername(), better.getPoint());
+
         for(BettingState v : accountBettingState) {
             accountDto.getBettingData().add(
                     new AccountDto.BettingData(
@@ -101,6 +100,7 @@ public class BettingGameServiceImpl implements BettingGameService {
                             v.getLeague().getStartTime(),
                             v.getChoice().getChoiceId(),
                             v.getChoice().getName(),
+                            v.getChoice().getTotalPoint(),
                             v.getPoint()
                     )
             );
