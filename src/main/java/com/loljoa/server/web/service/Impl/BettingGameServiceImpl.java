@@ -13,6 +13,7 @@ import com.loljoa.server.web.service.BettingGameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,7 @@ public class BettingGameServiceImpl implements BettingGameService {
         return result;
     }
     @Override
+    @Transactional
     public AccountDto.BettingData bettingToChoice(Long choiceId, Long accountId, Long leagueId, Long point) {
         BettingChoice choice = bettingChoiceRepository.getChoiceById(choiceId);
         Account better = accountRepository.getAccountById(accountId);
