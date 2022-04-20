@@ -87,26 +87,30 @@ public class BettingGameServiceImpl implements BettingGameService {
 
     @Override
     public AccountDto getAccountBettingData(String username) {
-
         List<BettingState> accountBettingState = bettingStateRepository.getAccountBettingState(username);
 
-        Account better = accountBettingState.get(0).getBetter();
-        AccountDto accountDto = new AccountDto(better.getAccountId(), better.getUsername(), better.getPoint());
+        if(accountBettingState.size() > 0) {
+            Account better = accountBettingState.get(0).getBetter();
+            AccountDto accountDto = new AccountDto(better.getAccountId(), better.getUsername(), better.getPoint());
 
-        for(BettingState v : accountBettingState) {
-            accountDto.getBettingData().add(
-                    new AccountDto.BettingData(
-                            v.getLeague().getLeagueName().split("vs")[0],
-                            v.getLeague().getLeagueName().split("vs")[1],
-                            v.getLeague().getWeekNum(),
-                            v.getLeague().getStartTime(),
-                            v.getChoice().getChoiceId(),
-                            v.getChoice().getName(),
-                            v.getChoice().getTotalPoint(),
-                            v.getPoint()
-                    )
-            );
+            for(BettingState v : accountBettingState) {
+                accountDto.getBettingData().add(
+                        new AccountDto.BettingData(
+                                v.getLeague().getLeagueName().split("vs")[0],
+                                v.getLeague().getLeagueName().split("vs")[1],
+                                v.getLeague().getWeekNum(),
+                                v.getLeague().getStartTime(),
+                                v.getChoice().getChoiceId(),
+                                v.getChoice().getName(),
+                                v.getChoice().getTotalPoint(),
+                                v.getPoint()
+                        )
+                );
+            }
+            return accountDto;
+        } else {
+            Account account = accountRepository.getAccountByUsername(username);
+            return new AccountDto(account.getAccountId(), account.getUsername(), account.getPoint());
         }
-        return accountDto;
     }
 }

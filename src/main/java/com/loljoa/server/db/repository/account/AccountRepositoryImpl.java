@@ -19,4 +19,12 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
                 .where(account.accountId.eq(id))
                 .fetchOne();
     }
+
+    @Override
+    public Account getAccountByUsername(String username) {
+        return factory
+                .selectFrom(account)
+                .where(account.username.eq(username))
+                .fetchOne();
+    }
 }
