@@ -117,4 +117,10 @@ public class BettingGameServiceImpl implements BettingGameService {
             return new AccountDto(account.getAccountId(), account.getUsername(), account.getPoint());
         }
     }
+
+    @Override
+    public void cancelBetting(Long accountId, Long choiceId) {
+        BettingState gameBettingState = bettingStateRepository.getGameBettingState(accountId, choiceId);
+        bettingStateRepository.delete(gameBettingState);
+    }
 }

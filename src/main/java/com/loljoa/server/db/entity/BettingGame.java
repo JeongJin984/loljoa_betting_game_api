@@ -26,7 +26,7 @@ public class BettingGame {
         this.league = league;
     }
 
-    @OneToMany(mappedBy = "targetGame", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "targetGame", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private final List<BettingChoice> choices = new ArrayList<>();
 
     public void addTotalPoint(Long point) {

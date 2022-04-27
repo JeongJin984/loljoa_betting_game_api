@@ -9,4 +9,6 @@ public interface BettingGameService {
     List<GameDataDto> getBettingGameData(Long leagueId);
     AccountDto.BettingData bettingToChoice(Long choiceId, Long accountId, Long leagueId, Long gameId, Long point);
     AccountDto getAccountBettingData(String username);
+
+    void cancelBetting(Long accountId, Long choiceId);
 }

@@ -6,10 +6,7 @@ import com.loljoa.server.web.service.BettingGameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -52,5 +49,13 @@ public class BettingGameAPI {
             Cookie[] cookies = request.getCookies();
             return bettingGameService.getAccountBettingData(request.getCookies()[0].getValue());
         }
+    }
+
+    @PutMapping("/cancel")
+    public void cancelBetting(
+            @RequestParam Long accountId,
+            @RequestParam Long choiceId
+    ) {
+        bettingGameService.cancelBetting(accountId, choiceId);
     }
 }

@@ -9,4 +9,8 @@ public interface BettingStateRepositoryCustom {
     List<BettingState> getAllBettingState(Long bettingChoiceId);
 
     List<BettingState> getAccountBettingState(String username);
+
+    List<BettingState> getGameBettingState(Long choiceId);
+
+    BettingState getGameBettingState(Long choiceId, Long accountId);
 }

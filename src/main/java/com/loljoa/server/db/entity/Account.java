@@ -36,4 +36,6 @@ public class Account {
     public void usePoint(Long point) {
         this.point -= point;
     }
+
+    public void addPoint(Long point){ this.point += point; }
 }

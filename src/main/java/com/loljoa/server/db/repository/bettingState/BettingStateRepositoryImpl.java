@@ -37,4 +37,29 @@ public class BettingStateRepositoryImpl implements BettingStateRepositoryCustom 
                 .where(bettingState.better().username.eq(username))
                 .fetch();
     }
+
+    @Override
+    public List<BettingState> getGameBettingState(Long choiceId) {
+        List<BettingState> fetch = factory
+                .selectFrom(bettingState)
+                .join(bettingState.choice(), bettingChoice).fetchJoin()
+                .join(bettingState.better(), account).fetchJoin()
+                .where(bettingState.choice().choiceId.eq(choiceId))
+                .fetch();
+        return fetch;
+    }
+
+    @Override
+    public BettingState getGameBettingState(Long choiceId, Long accountId) {
+        BettingState fetch = factory
+                .selectFrom(bettingState)
+                .join(bettingState.choice(), bettingChoice).fetchJoin()
+                .join(bettingState.better(), account).fetchJoin()
+                .where(
+                        bettingState.choice().choiceId.eq(choiceId)
+                                .and(bettingState.better().accountId.eq(accountId))
+                )
+                .fetchOne();
+        return fetch;
+    }
 }
