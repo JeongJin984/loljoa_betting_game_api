@@ -124,6 +124,5 @@ public class BettingGameServiceImpl implements BettingGameService {
         for(BettingState state : gameBettingState) {
             bettingStateRepository.delete(state);
         }
-
     }
 }
