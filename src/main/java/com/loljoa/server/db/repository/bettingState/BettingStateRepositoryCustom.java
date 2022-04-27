@@ -12,5 +12,5 @@ public interface BettingStateRepositoryCustom {
 
     List<BettingState> getGameBettingState(Long choiceId);
 
-    BettingState getGameBettingState(long accountId, long choiceId);
+    List<BettingState> getGameBettingState(long accountId, long choiceId);
 }

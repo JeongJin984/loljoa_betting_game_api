@@ -50,8 +50,8 @@ public class BettingStateRepositoryImpl implements BettingStateRepositoryCustom 
     }
 
     @Override
-    public BettingState getGameBettingState(long accountId, long choiceId) {
-        BettingState fetch = factory
+    public List<BettingState> getGameBettingState(long accountId, long choiceId) {
+        List<BettingState> fetch = factory
                 .selectFrom(bettingState)
                 .join(bettingState.choice(), bettingChoice).fetchJoin()
                 .join(bettingState.better(), account).fetchJoin()
@@ -59,7 +59,7 @@ public class BettingStateRepositoryImpl implements BettingStateRepositoryCustom 
                         bettingState.choice().choiceId.eq(choiceId)
                                 .and(bettingState.better().accountId.eq(accountId))
                 )
-                .fetchOne();
+                .fetch();
         return fetch;
     }
 }
