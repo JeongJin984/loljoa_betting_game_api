@@ -50,7 +50,7 @@ public class BettingStateRepositoryImpl implements BettingStateRepositoryCustom 
     }
 
     @Override
-    public BettingState getGameBettingState(Long choiceId, Long accountId) {
+    public BettingState getGameBettingState(long accountId, long choiceId) {
         BettingState fetch = factory
                 .selectFrom(bettingState)
                 .join(bettingState.choice(), bettingChoice).fetchJoin()
