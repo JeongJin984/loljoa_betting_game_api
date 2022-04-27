@@ -52,7 +52,7 @@ public class AccountDto {
             this.choiceId = choiceId;
             this.choice = choice;
             this.choiceTotalPoint = choiceTotalPoint;
-            this.odd = String.format("%.2f", (choiceTotalPoint.doubleValue() / totalGamePoint) * 100);
+            this.odd = String.format("%.2f", ( totalGamePoint / choiceTotalPoint.doubleValue()));
             this.point = point;
         }
     }

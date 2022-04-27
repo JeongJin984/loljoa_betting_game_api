@@ -49,14 +49,12 @@ public class BettingGameServiceImpl implements BettingGameService {
                         )
                 );
             }
-            if(totalPoint == 0L) {
-                for(ChoiceDataDto v : choiceDtoList) {
-                    v.setPercent(0L);
-                }
-            } else {
-                for(ChoiceDataDto v : choiceDtoList) {
-                    double temp =  (v.getTotalPoint().doubleValue() / totalPoint) * 100;
-                    v.setPercent(Math.round(temp));
+
+            for(ChoiceDataDto v : choiceDtoList) {
+                if(v.getTotalPoint() == 0) {
+                    v.setOdd(0.00);
+                } else {
+                    v.setOdd((totalPoint / v.getTotalPoint().doubleValue()));
                 }
             }
             gameDataDto.setChoices(choiceDtoList);

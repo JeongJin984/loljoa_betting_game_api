@@ -9,7 +9,7 @@ public class ChoiceDataDto {
     private Long totalPoint;
     private String biggestBetter;
     private Long biggestPoint;
-    private Long percent;
+    private Double odd;
 
     public ChoiceDataDto(Long choiceId, String name, Long totalPoint, String biggestBetter, Long biggestPoint) {
         this.choiceId = choiceId;
