@@ -75,6 +75,7 @@ public class BettingGameServiceImpl implements BettingGameService {
         better.usePoint(point);
         bettingGame.addTotalPoint(point);
         return new AccountDto.BettingData(
+                gameId,
                 league.getLeagueName().split("vs")[0],
                 league.getLeagueName().split("vs")[1],
                 league.getWeekNum(),
@@ -99,6 +100,7 @@ public class BettingGameServiceImpl implements BettingGameService {
                 BettingGame game = v.getChoice().getTargetGame();
                 accountDto.getBettingData().add(
                         new AccountDto.BettingData(
+                                game.getGameId(),
                                 v.getLeague().getLeagueName().split("vs")[0],
                                 v.getLeague().getLeagueName().split("vs")[1],
                                 v.getLeague().getWeekNum(),

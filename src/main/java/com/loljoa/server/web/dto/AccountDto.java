@@ -23,6 +23,8 @@ public class AccountDto {
 
     @Data
     public static class BettingData {
+        private Long gameId;
+
         private String leftTeam;
         private String rightTeam;
         private String weekNum;
@@ -35,6 +37,7 @@ public class AccountDto {
         private Long point;
 
         public BettingData(
+                Long gameId,
                 String leftTeam,
                 String rightTeam,
                 String weekNum,
@@ -45,6 +48,7 @@ public class AccountDto {
                 Long totalGamePoint,
                 Long point
         ) {
+            this.gameId = gameId;
             this.leftTeam = leftTeam;
             this.rightTeam = rightTeam;
             this.weekNum = weekNum;
