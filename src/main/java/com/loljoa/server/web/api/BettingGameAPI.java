@@ -51,7 +51,7 @@ public class BettingGameAPI {
         }
     }
 
-    @PutMapping("/cancel")
+    @PostMapping("/cancel")
     public void cancelBetting(
             @RequestParam Long accountId,
             @RequestParam Long choiceId
