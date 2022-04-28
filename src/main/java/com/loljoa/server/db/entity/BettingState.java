@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 public class BettingState {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long stateId;
 
     private Long point;

@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class League {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long leagueId;
 
     private String weekNum;

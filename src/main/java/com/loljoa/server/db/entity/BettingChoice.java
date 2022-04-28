@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 public class BettingChoice {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long choiceId;
 
     private String name;

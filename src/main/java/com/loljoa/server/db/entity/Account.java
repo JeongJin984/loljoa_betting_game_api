@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Account {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long accountId;
 
     @Column(unique = true)

@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class BettingGame {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long gameId;
 
     private String title;
