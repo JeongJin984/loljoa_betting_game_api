@@ -32,4 +32,5 @@ public class BettingGame {
     public void addTotalPoint(Long point) {
         totalPoint += point;
     }
+    public void bettingCanceled(Long point) { totalPoint -= point; }
 }

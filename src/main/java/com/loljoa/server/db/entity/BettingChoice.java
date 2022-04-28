@@ -38,4 +38,8 @@ public class BettingChoice {
             this.biggestPoint = point;
         }
     }
+
+    public void bettingCanceled(Long point) {
+        this.totalPoint -= point;
+    }
 }

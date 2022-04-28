@@ -56,9 +56,10 @@ public class BettingGameAPI {
     @PostMapping("/cancel")
     public void cancelBetting(
             @RequestParam Long accountId,
-            @RequestParam Long choiceId
+            @RequestParam Long choiceId,
+            @RequestParam Long gameId
     ) {
-        bettingGameService.cancelBetting(accountId, choiceId);
+        bettingGameService.cancelBetting(accountId, choiceId, gameId);
     }
 
     @PostMapping("/distribute")

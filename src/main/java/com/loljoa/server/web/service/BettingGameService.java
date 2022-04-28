@@ -10,5 +10,5 @@ public interface BettingGameService {
     AccountDto.BettingData bettingToChoice(Long choiceId, Long accountId, Long leagueId, Long gameId, Long point);
     AccountDto getAccountBettingData(String username);
 
-    void cancelBetting(Long accountId, Long choiceId);
+    void cancelBetting(Long accountId, Long choiceId, Long gameId);
 }

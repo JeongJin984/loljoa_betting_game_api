@@ -122,11 +122,15 @@ public class BettingGameServiceImpl implements BettingGameService {
 
     @Override
     @Transactional
-    public void cancelBetting(Long accountId, Long choiceId) {
+    public void cancelBetting(Long accountId, Long choiceId, Long gameId) {
         List<BettingState> gameBettingState = bettingStateRepository.getGameBettingState(accountId, choiceId);
         for(BettingState state : gameBettingState) {
             bettingStateRepository.delete(state);
             state.getBetter().addPoint(state.getPoint());
+            BettingChoice choice = bettingChoiceRepository.getChoiceById(choiceId);
+            choice.bettingCanceled(state.getPoint());
+            BettingGame gameData = bettingGameRepository.getGameDataById(gameId);
+            gameData.bettingCanceled(state.getPoint());
         }
     }
 }
