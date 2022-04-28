@@ -33,6 +33,5 @@ public class PointDistributeServiceImpl implements PointDistributionService {
                 }
             }
         }
-        bettingGameRepository.delete(gameData);
     }
 }
