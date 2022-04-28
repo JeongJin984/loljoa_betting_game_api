@@ -89,7 +89,6 @@ public class BettingGameServiceImpl implements BettingGameService {
     }
 
     @Override
-    @Transactional
     public AccountDto getAccountBettingData(String username) {
         List<BettingState> accountBettingState = bettingStateRepository.getAccountBettingState(username);
 
