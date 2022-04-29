@@ -11,8 +11,10 @@ import com.loljoa.server.web.dto.ChoiceDataDto;
 import com.loljoa.server.web.dto.GameDataDto;
 import com.loljoa.server.web.service.BettingGameService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.LockModeType;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,15 +67,18 @@ public class BettingGameServiceImpl implements BettingGameService {
 
     @Override
     @Transactional
+    @Lock(LockModeType.PESSIMISTIC_READ)
     public AccountDto.BettingData bettingToChoice(Long choiceId, Long accountId, Long leagueId, Long gameId, Long point) {
         BettingChoice choice = bettingChoiceRepository.getChoiceById(choiceId);
         Account better = accountRepository.getAccountById(accountId);
         League league = leagueRepository.getLeagueById(leagueId);
         BettingGame bettingGame = bettingGameRepository.getGameDataById(gameId);
-        bettingStateRepository.save(new BettingState(choice, better, league,point));
+
         choice.addTotalPoint(better.getUsername(), point);
         better.usePoint(point);
         bettingGame.addTotalPoint(point);
+        bettingStateRepository.save(new BettingState(choice, better, league,point));
+
         return new AccountDto.BettingData(
                 gameId,
                 league.getLeagueName().split("vs")[0],
