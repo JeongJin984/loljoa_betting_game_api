@@ -44,7 +44,6 @@ public class HealthController {
     public void onStateChanged(AvailabilityChangeEvent<ReadinessState> readiness) throws InterruptedException {
         System.out.println("State is changed to " + readiness.getState());
         if(readiness.getState().equals(ReadinessState.REFUSING_TRAFFIC)) {
-            Thread.sleep(15000L);
             AvailabilityChangeEvent.publish(eventPublisher, this, ReadinessState.ACCEPTING_TRAFFIC);
         }
 //        Action When State Changed
